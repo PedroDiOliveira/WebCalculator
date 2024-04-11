@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+////////////////////////////////////////////////////////////////////////
+//Struct router que direciona o usuario a partir dos paths no servidor//
+////////////////////////////////////////////////////////////////////////
+
 type Router struct{}
 
 func (Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
@@ -14,8 +18,8 @@ func (Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 
 	if path != "/calculator" {
 		resp := messages[404]
-		cebola, _ := json.Marshal(resp)
-		res.Write(cebola)
+		send, _ := json.Marshal(resp)
+		res.Write(send)
 		return
 	}
 
@@ -33,6 +37,10 @@ func (Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 
 }
 
+/////////////////////////////////////
+//Função de rosteamento do servidor//
+/////////////////////////////////////
+
 func RunService() {
 	s := http.Server{
 		Addr:         "127.0.0.1:8080",
@@ -41,5 +49,5 @@ func RunService() {
 		WriteTimeout: 10 * time.Second,
 	}
 
-	log.Fatal(s.ListenAndServe())
+	log.Fatal(s.ListenAndServe()) //log fatal para formatar um possivel erro na função
 }
